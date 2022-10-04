@@ -130,21 +130,88 @@ void mySetupGeometries() {
 		0.0f, -2.0f / sqrtf(6.0f), 4.0f / sqrtf(3.0f),		1.0f, 0.0f, 0.0f, // Front vertex, red, again
 		2.0f, -2.0f / sqrtf(6.0f), -2.0f / sqrtf(3.0f),		0.0f, 1.0f, 0.0f, // Right back vertex, green, again	
 	};
-
-	*/
-	float twoTriangles[] = {
-		// Positions										// Colors
-		0.0f, -2.0f / sqrtf(6.0f), 4.0f / sqrtf(3.0f),		1.0f, 0.0f, 0.0f, // Front vertex, red
-		2.0f, -2.0f / sqrtf(6.0f), -2.0f / sqrtf(3.0f),		0.0f, 1.0f, 0.0f, // Right back vertex, green
-		0.0f, 6.0f/sqrtf(6.0f), 0.0f,						0.7f, 0.7f, 0.7f, // Top, light gray
-		-2.0f, -2.0f / sqrtf(6.0f), -2.0f / sqrtf(3.0f),	0.0f, 0.0f, 1.0f, // Left back vertex, blue	
-		0.0f, -2.0f / sqrtf(6.0f), 4.0f / sqrtf(3.0f),		1.0f, 0.0f, 0.0f, // Front vertex, red, again
-		2.0f, -2.0f / sqrtf(6.0f), -2.0f / sqrtf(3.0f),		0.0f, 1.0f, 0.0f, // Right back vertex, green, again	
-	};
-
 	glBindVertexArray(myVAO[itriangleFan]);
 	glBindBuffer(GL_ARRAY_BUFFER, myVBO[itwoTriangles]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(twoTriangles), twoTriangles, GL_STATIC_DRAW);
+	glVertexAttribPointer(aPos_loc, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);	// Store vertices in the VBO
+	glEnableVertexAttribArray(aPos_loc);									// Enable the stored vertices
+	glVertexAttribPointer(aColor_loc, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(aColor_loc);
+	*/
+	float twoTriangles[] = {
+		// Positions			// Colors
+		// v1, v3, v2, v4 as a triangle strip  
+		4.0f, 2.0f, 0.0f,		1.0f, 0.0f, 0.0f, // Front vertex, red 
+		0.0f, 2.0f, 0.0f,	0.0f, 1.0f, 0.0f, // Right back vertex, green
+		4.0f, 0.0f, 0.0f,						0.7f, 0.7f, 0.7f, // Top, light gray
+		0.0f, 0.0f, 0.0f,	0.0f, 0.0f, 1.0f, // Left back vertex, blue	
+	};
+
+	glBindVertexArray(myVAO[itwoTriangles]);
+	glBindBuffer(GL_ARRAY_BUFFER, myVBO[itwoTriangles]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(twoTriangles), twoTriangles, GL_STATIC_DRAW);
+	glVertexAttribPointer(aPos_loc, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);	// Store vertices in the VBO
+	glEnableVertexAttribArray(aPos_loc);									// Enable the stored vertices
+	glVertexAttribPointer(aColor_loc, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(aColor_loc);
+
+	float triangleStrip1[] = {
+		// Positions			// Colors
+		// v1, v3, v2, v4 as a triangle strip  
+		
+		0.0f, 2.0f, 2.0f,	1.0f, 0.0f, 0.0f, // Front vertex, red v2
+		0.0f, 0.0f, 2.0f,	0.0f, 1.0f, 0.0f, // Right back vertex, green v0 
+		2.0f, 2.0f, 2.0f,	0.7f, 0.7f, 0.7f, // Top, light gray v3 
+ 		2.0f, 0.0f, 2.0f,	0.0f, 0.0f, 1.0f, //	v1 
+		2.0f, 2.0f, 0.0f,	1.0f, 0.0f, 0.0f, //	v7
+		2.0f, 0.0f, 0.0f,	0.0f, 0.0f, 1.0f, //	v5
+		0.0f, 2.0f, 0.0f,	1.0f, 0.0f, 0.0f, //	v6
+		0.0f, 0.0f, 0.0f,	0.0f, 0.0f, 1.0f, //	v4
+		0.0f, 2.0f, 2.0f,	1.0f, 0.0f, 0.0f, //	v2
+		0.0f, 0.0f, 2.0f,	0.0f, 0.0f, 1.0f, //	v0
+		
+		
+	};
+
+	glBindVertexArray(myVAO[itriangleStrip1]);
+	glBindBuffer(GL_ARRAY_BUFFER, myVBO[itriangleStrip1]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(triangleStrip1), triangleStrip1, GL_STATIC_DRAW);
+	glVertexAttribPointer(aPos_loc, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);	// Store vertices in the VBO
+	glEnableVertexAttribArray(aPos_loc);									// Enable the stored vertices
+	glVertexAttribPointer(aColor_loc, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(aColor_loc);
+
+
+	float triangleStrip2[] = {
+		// Positions			// Colors
+		// v1, v3, v2, v4 as a triangle strip  
+		4.0f, 2.0f, 0.0f,		1.0f, 0.0f, 0.0f, // Front vertex, red 
+		0.0f, 2.0f, 0.0f,	0.0f, 1.0f, 0.0f, // Right back vertex, green
+		4.0f, 0.0f, 0.0f,						0.7f, 0.7f, 0.7f, // Top, light gray
+		0.0f, 0.0f, 0.0f,	0.0f, 0.0f, 1.0f, // Left back vertex, blue	
+	};
+
+	glBindVertexArray(myVAO[itriangleStrip2]);
+	glBindBuffer(GL_ARRAY_BUFFER, myVBO[itriangleStrip2]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(triangleStrip2), triangleStrip2, GL_STATIC_DRAW);
+	glVertexAttribPointer(aPos_loc, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);	// Store vertices in the VBO
+	glEnableVertexAttribArray(aPos_loc);									// Enable the stored vertices
+	glVertexAttribPointer(aColor_loc, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(aColor_loc);
+
+
+	float triangleFan[] = {
+		// Positions			// Colors
+		// v1, v3, v2, v4 as a triangle strip  
+		4.0f, 2.0f, 0.0f,		1.0f, 0.0f, 0.0f, // Front vertex, red 
+		0.0f, 2.0f, 0.0f,	0.0f, 1.0f, 0.0f, // Right back vertex, green
+		4.0f, 0.0f, 0.0f,						0.7f, 0.7f, 0.7f, // Top, light gray
+		0.0f, 0.0f, 0.0f,	0.0f, 0.0f, 1.0f, // Left back vertex, blue	
+	};
+
+	glBindVertexArray(myVAO[itriangleFan]);
+	glBindBuffer(GL_ARRAY_BUFFER, myVBO[itriangleFan]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(triangleFan), triangleFan, GL_STATIC_DRAW);
 	glVertexAttribPointer(aPos_loc, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);	// Store vertices in the VBO
 	glEnableVertexAttribArray(aPos_loc);									// Enable the stored vertices
 	glVertexAttribPointer(aColor_loc, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
@@ -200,8 +267,9 @@ void myRenderScene() {
 
 		// THE NEXT LINES WILL NEED TO BE CHANGED TO DRAW THE OBELISK:
 		// Draw entire tetrahedron as a Triangle Strip
-		glBindVertexArray(myVAO[iTriangleStrip1]);// load data in 
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 6);
+		// glBindVertexArray(myVAO[itwoTriangles]);// load data in 
+		glBindVertexArray(myVAO[itriangleStrip1]);// load data in 
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 10);
 	}
 	
 	check_for_opengl_errors();   // Really a great idea to check for errors -- esp. good for debugging!
