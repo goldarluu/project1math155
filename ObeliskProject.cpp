@@ -138,6 +138,7 @@ void mySetupGeometries() {
 	glVertexAttribPointer(aColor_loc, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(aColor_loc);
 	*/
+	
 	float twoTriangles[] = {
 		// Positions			// Colors
 		// v1, v3, v2, v4 as a triangle strip  
@@ -205,14 +206,15 @@ void mySetupGeometries() {
 	glVertexAttribPointer(aColor_loc, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(aColor_loc);
 
-
 	float triangleFan[] = {
 		// Positions			// Colors
 		// v1, v3, v2, v4 as a triangle strip  
-		4.0f, 2.0f, 0.0f,		1.0f, 0.0f, 0.0f, // Front vertex, red 
-		0.0f, 2.0f, 0.0f,	0.0f, 1.0f, 0.0f, // Right back vertex, green
-		4.0f, 0.0f, 0.0f,						0.7f, 0.7f, 0.7f, // Top, light gray
-		0.0f, 0.0f, 0.0f,	0.0f, 0.0f, 1.0f, // Left back vertex, blue	
+		1.0f, 5.0f, 1.0f,	1.0f, 0.0f, 0.0f, //	v0 (MIDPT) 
+		1.5f, 4.0f, 1.5f,	0.7f, 0.7f, 0.7f, // Top, light gray v3 
+		1.5f, 4.0f, 0.5f,	1.0f, 0.0f, 0.0f, //	v7
+		0.5f, 4.0f, 0.5f,	1.0f, 0.0f, 0.0f, //	v6
+		0.5f, 4.0f, 1.5f,	1.0f, 0.0f, 0.0f, // Front vertex, red v2
+		1.5f, 4.0f, 1.5f,	0.7f, 0.7f, 0.7f, // Top, light gray v3 
 	};
 
 	glBindVertexArray(myVAO[itriangleFan]);
@@ -273,7 +275,7 @@ void myRenderScene() {
 
 		// THE NEXT LINES WILL NEED TO BE CHANGED TO DRAW THE OBELISK:
 		// Draw entire tetrahedron as a Triangle Strip
-	
+		
 		// Two triangles at the bottom as a strip 
 		glBindVertexArray(myVAO[itwoTriangles]);// load data in 
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -285,6 +287,10 @@ void myRenderScene() {
 		// Triangle Strip to create the trucated square pyramid
 		glBindVertexArray(myVAO[itriangleStrip2]);// load data in 
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 10);
+		
+		// Triangle Fan to create the top pyramid. 
+		glBindVertexArray(myVAO[itriangleFan]);// load data in 
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 5);
 	}
 	
 	check_for_opengl_errors();   // Really a great idea to check for errors -- esp. good for debugging!
