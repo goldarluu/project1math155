@@ -141,10 +141,10 @@ void mySetupGeometries() {
 	float twoTriangles[] = {
 		// Positions			// Colors
 		// v1, v3, v2, v4 as a triangle strip  
-		4.0f, 2.0f, 0.0f,		1.0f, 0.0f, 0.0f, // Front vertex, red 
-		0.0f, 2.0f, 0.0f,	0.0f, 1.0f, 0.0f, // Right back vertex, green
-		4.0f, 0.0f, 0.0f,						0.7f, 0.7f, 0.7f, // Top, light gray
-		0.0f, 0.0f, 0.0f,	0.0f, 0.0f, 1.0f, // Left back vertex, blue	
+		2.0f, 0.0f, 0.0f,		1.0f, 0.0f, 0.0f, // Front vertex, red 
+		0.0f, 0.0f, 0.0f,	0.0f, 1.0f, 0.0f, // Right back vertex, green
+		2.0f, 0.0f, 2.0f,	1.0f, 0.0f, 0.0f, // Top, light gray
+		0.0f, 0.0f, 2.0f,	0.0f, 0.0f, 1.0f, // Left back vertex, blue	
 	};
 
 	glBindVertexArray(myVAO[itwoTriangles]);
@@ -170,7 +170,6 @@ void mySetupGeometries() {
 		0.0f, 2.0f, 2.0f,	1.0f, 0.0f, 0.0f, //	v2
 		0.0f, 0.0f, 2.0f,	0.0f, 0.0f, 1.0f, //	v0
 		
-		
 	};
 
 	glBindVertexArray(myVAO[itriangleStrip1]);
@@ -185,10 +184,17 @@ void mySetupGeometries() {
 	float triangleStrip2[] = {
 		// Positions			// Colors
 		// v1, v3, v2, v4 as a triangle strip  
-		4.0f, 2.0f, 0.0f,		1.0f, 0.0f, 0.0f, // Front vertex, red 
-		0.0f, 2.0f, 0.0f,	0.0f, 1.0f, 0.0f, // Right back vertex, green
-		4.0f, 0.0f, 0.0f,						0.7f, 0.7f, 0.7f, // Top, light gray
-		0.0f, 0.0f, 0.0f,	0.0f, 0.0f, 1.0f, // Left back vertex, blue	
+
+		0.5f, 4.0f, 1.5f,	1.0f, 0.0f, 0.0f, // Front vertex, red v2
+		0.0f, 2.0f, 2.0f,	0.0f, 1.0f, 0.0f, // Right back vertex, green v0 
+		1.5f, 4.0f, 1.5f,	0.7f, 0.7f, 0.7f, // Top, light gray v3 
+		2.0f, 2.0f, 2.0f,	0.0f, 0.0f, 1.0f, //	v1 
+		1.5f, 4.0f, 0.5f,	1.0f, 0.0f, 0.0f, //	v7
+		2.0f, 2.0f, 0.0f,	0.0f, 0.0f, 1.0f, //	v5
+		0.5f, 4.0f, 0.5f,	1.0f, 0.0f, 0.0f, //	v6
+		0.0f, 2.0f, 0.0f,	0.0f, 0.0f, 1.0f, //	v4
+		0.5f, 4.0f, 1.5f,	1.0f, 0.0f, 0.0f, //	v2
+		0.0f, 2.0f, 2.0f,	0.0f, 0.0f, 1.0f, //	v0
 	};
 
 	glBindVertexArray(myVAO[itriangleStrip2]);
@@ -267,8 +273,17 @@ void myRenderScene() {
 
 		// THE NEXT LINES WILL NEED TO BE CHANGED TO DRAW THE OBELISK:
 		// Draw entire tetrahedron as a Triangle Strip
-		// glBindVertexArray(myVAO[itwoTriangles]);// load data in 
+	
+		// Two triangles at the bottom as a strip 
+		glBindVertexArray(myVAO[itwoTriangles]);// load data in 
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+		// Triangle Strip to create the cube! 
 		glBindVertexArray(myVAO[itriangleStrip1]);// load data in 
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 10);
+
+		// Triangle Strip to create the trucated square pyramid
+		glBindVertexArray(myVAO[itriangleStrip2]);// load data in 
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 10);
 	}
 	
