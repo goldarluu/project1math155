@@ -1,21 +1,3 @@
-Skip to content
-goldarluu
-/
-project1math155
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-More
-project1math155 / ObeliskProject.cpp
-@goldarluu
-goldarluu Add files via upload
-History
-1 contributor
-565 lines(494 sloc)  22.9 KB
 /*
  * TetrahedraFlatSmooth.cpp - Version 1.2 - September 28, 2022.
  *
@@ -158,12 +140,12 @@ void mySetupGeometries() {
 	*/
 
 	float twoTriangles[] = {
-		// Positions			// Colors
+		// Positions			// Colors 0.7, 0.7, 07
 		// v1, v3, v2, v4 as a triangle strip  
-		2.0f, 0.0f, 0.0f,		1.0f, 0.0f, 0.0f, // Front vertex, red 
-		0.0f, 0.0f, 0.0f,	0.0f, 1.0f, 0.0f, // Right back vertex, green
-		2.0f, 0.0f, 2.0f,	1.0f, 0.0f, 0.0f, // Top, light gray
-		0.0f, 0.0f, 2.0f,	0.0f, 0.0f, 1.0f, // Left back vertex, blue	
+		2.0f, 0.0f, 0.0f,		0.7f, 0.7f, 0.7f, // Front vertex, gray 
+		0.0f, 0.0f, 0.0f,	0.7f, 0.7f, 0.7f, // Right back vertex, green
+		2.0f, 0.0f, 2.0f,	0.7f, 0.7f, 0.7f, // Top, light gray
+		0.0f, 0.0f, 2.0f,	0.7f, 0.7f, 0.7f, // Left back vertex, blue	
 	};
 
 	glBindVertexArray(myVAO[itwoTriangles]);
@@ -178,16 +160,16 @@ void mySetupGeometries() {
 		// Positions			// Colors
 		// v1, v3, v2, v4 as a triangle strip  
 
-		0.0f, 2.0f, 2.0f,	1.0f, 0.0f, 0.0f, // Front vertex, red v2
-		0.0f, 0.0f, 2.0f,	0.0f, 1.0f, 0.0f, // Right back vertex, green v0 
-		2.0f, 2.0f, 2.0f,	0.7f, 0.7f, 0.7f, // Top, light gray v3 
-		2.0f, 0.0f, 2.0f,	0.0f, 0.0f, 1.0f, //	v1 
-		2.0f, 2.0f, 0.0f,	1.0f, 0.0f, 0.0f, //	v7
+		0.0f, 2.0f, 2.0f,	1.0f, 1.0f, 0.0f, // Front vertex, yellow v2
+		0.0f, 0.0f, 2.0f,	1.0f, 1.0f, 0.0f, //  yellow v0 
+		2.0f, 2.0f, 2.0f,	0.0f, 1.0f, 0.0f, // green v3 
+		2.0f, 0.0f, 2.0f,	0.0f, 1.0f, 0.0f, //	v1 
+		2.0f, 2.0f, 0.0f,	0.0f, 0.0f, 1.0f, //	v7
 		2.0f, 0.0f, 0.0f,	0.0f, 0.0f, 1.0f, //	v5
 		0.0f, 2.0f, 0.0f,	1.0f, 0.0f, 0.0f, //	v6
-		0.0f, 0.0f, 0.0f,	0.0f, 0.0f, 1.0f, //	v4
-		0.0f, 2.0f, 2.0f,	1.0f, 0.0f, 0.0f, //	v2
-		0.0f, 0.0f, 2.0f,	0.0f, 0.0f, 1.0f, //	v0
+		0.0f, 0.0f, 0.0f,	1.0f, 0.0f, 0.0f, //	v4
+		0.0f, 2.0f, 2.0f,	1.0f, 1.0f, 0.0f, //	v2
+		0.0f, 0.0f, 2.0f,	1.0f, 1.0f, 0.0f, //	v0
 
 	};
 
@@ -205,15 +187,15 @@ void mySetupGeometries() {
 		// v1, v3, v2, v4 as a triangle strip  
 
 		0.5f, 4.0f, 1.5f,	1.0f, 0.0f, 0.0f, // Front vertex, red v2
-		0.0f, 2.0f, 2.0f,	0.0f, 1.0f, 0.0f, // Right back vertex, green v0 
+		0.0f, 2.0f, 2.0f,	1.0f, 1.0f, 0.0f, // Right back vertex, green v0 
 		1.5f, 4.0f, 1.5f,	0.7f, 0.7f, 0.7f, // Top, light gray v3 
-		2.0f, 2.0f, 2.0f,	0.0f, 0.0f, 1.0f, //	v1 
+		2.0f, 2.0f, 2.0f,	0.0f, 1.0f, 0.0f, //	v1 
 		1.5f, 4.0f, 0.5f,	1.0f, 0.0f, 0.0f, //	v7
 		2.0f, 2.0f, 0.0f,	0.0f, 0.0f, 1.0f, //	v5
 		0.5f, 4.0f, 0.5f,	1.0f, 0.0f, 0.0f, //	v6
-		0.0f, 2.0f, 0.0f,	0.0f, 0.0f, 1.0f, //	v4
+		0.0f, 2.0f, 0.0f,	1.0f, 0.0f, 0.0f, //	v4
 		0.5f, 4.0f, 1.5f,	1.0f, 0.0f, 0.0f, //	v2
-		0.0f, 2.0f, 2.0f,	0.0f, 0.0f, 1.0f, //	v0
+		0.0f, 2.0f, 2.0f,	1.0f, 1.0f, 0.0f, //	v0
 	};
 
 	glBindVertexArray(myVAO[itriangleStrip2]);
@@ -227,7 +209,7 @@ void mySetupGeometries() {
 	float triangleFan[] = {
 		// Positions			// Colors
 		// v1, v3, v2, v4 as a triangle strip  
-		1.0f, 5.0f, 1.0f,	1.0f, 0.0f, 0.0f, //	v0 (MIDPT) 
+		1.0f, 5.0f, 1.0f,	1.0f, 1.0f, 1.0f, //	v0 (MIDPT) 
 		1.5f, 4.0f, 1.5f,	0.7f, 0.7f, 0.7f, // Top, light gray v3 
 		1.5f, 4.0f, 0.5f,	1.0f, 0.0f, 0.0f, //	v7
 		0.5f, 4.0f, 0.5f,	1.0f, 0.0f, 0.0f, //	v6
@@ -581,18 +563,3 @@ bool check_for_opengl_errors() {
 	}
 	return (numErrors != 0);
 }
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-project1math155 / ObeliskProject.cpp at main · goldarluu / project1math155
