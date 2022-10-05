@@ -1,3 +1,21 @@
+Skip to content
+goldarluu
+/
+project1math155
+Public
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+More
+project1math155 / ObeliskProject.cpp
+@goldarluu
+goldarluu Add files via upload
+History
+1 contributor
+565 lines(494 sloc)  22.9 KB
 /*
  * TetrahedraFlatSmooth.cpp - Version 1.2 - September 28, 2022.
  *
@@ -15,8 +33,8 @@
  * Web page: http://math.ucsd.edu/~sbuss/MathCG2
  */
 
-// These libraries are needed to link the program.
-// First five are usually proved by the system.
+ // These libraries are needed to link the program.
+ // First five are usually proved by the system.
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"glu32.lib")
 #pragma comment(lib,"glfw3.lib")
@@ -62,9 +80,9 @@ bool cullBackFaces = false; // Equals true to cull backfaces. Equals false to no
 // AND (4) A TRIANGLE FAN (top).
 const int NumObjects = 4;
 const int itwoTriangles = 0;
-const int itriangleStrip1 = 1; 
-const int itriangleStrip2 = 2; 
-const int itriangleFan = 3; 
+const int itriangleStrip1 = 1;
+const int itriangleStrip2 = 2;
+const int itriangleFan = 3;
 
 unsigned int myVBO[NumObjects];  // a Vertex Buffer Object holds an array of data
 unsigned int myVAO[NumObjects];  // a Vertex Array Object - holds info about an array of vertex data;
@@ -120,15 +138,15 @@ void mySetupGeometries() {
 	//   SUGGESTED WAY TO FORM THE OBELISK IS WITH TWO TRIANGLE STRIPS AND 
 	//   A TRIANGLE FAN AND TWO MORE TRIANGLES.
 	// First Geometry : a Triangle Strip which forms the entire tetrahedron
-	/* 
+	/*
 	* float twoTriangles[] = {
 		// Positions										// Colors
 		0.0f, -2.0f / sqrtf(6.0f), 4.0f / sqrtf(3.0f),		1.0f, 0.0f, 0.0f, // Front vertex, red
 		2.0f, -2.0f / sqrtf(6.0f), -2.0f / sqrtf(3.0f),		0.0f, 1.0f, 0.0f, // Right back vertex, green
 		0.0f, 6.0f/sqrtf(6.0f), 0.0f,						0.7f, 0.7f, 0.7f, // Top, light gray
-		-2.0f, -2.0f / sqrtf(6.0f), -2.0f / sqrtf(3.0f),	0.0f, 0.0f, 1.0f, // Left back vertex, blue	
+		-2.0f, -2.0f / sqrtf(6.0f), -2.0f / sqrtf(3.0f),	0.0f, 0.0f, 1.0f, // Left back vertex, blue
 		0.0f, -2.0f / sqrtf(6.0f), 4.0f / sqrtf(3.0f),		1.0f, 0.0f, 0.0f, // Front vertex, red, again
-		2.0f, -2.0f / sqrtf(6.0f), -2.0f / sqrtf(3.0f),		0.0f, 1.0f, 0.0f, // Right back vertex, green, again	
+		2.0f, -2.0f / sqrtf(6.0f), -2.0f / sqrtf(3.0f),		0.0f, 1.0f, 0.0f, // Right back vertex, green, again
 	};
 	glBindVertexArray(myVAO[itriangleFan]);
 	glBindBuffer(GL_ARRAY_BUFFER, myVBO[itwoTriangles]);
@@ -138,7 +156,7 @@ void mySetupGeometries() {
 	glVertexAttribPointer(aColor_loc, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(aColor_loc);
 	*/
-	
+
 	float twoTriangles[] = {
 		// Positions			// Colors
 		// v1, v3, v2, v4 as a triangle strip  
@@ -159,18 +177,18 @@ void mySetupGeometries() {
 	float triangleStrip1[] = {
 		// Positions			// Colors
 		// v1, v3, v2, v4 as a triangle strip  
-		
+
 		0.0f, 2.0f, 2.0f,	1.0f, 0.0f, 0.0f, // Front vertex, red v2
 		0.0f, 0.0f, 2.0f,	0.0f, 1.0f, 0.0f, // Right back vertex, green v0 
 		2.0f, 2.0f, 2.0f,	0.7f, 0.7f, 0.7f, // Top, light gray v3 
- 		2.0f, 0.0f, 2.0f,	0.0f, 0.0f, 1.0f, //	v1 
+		2.0f, 0.0f, 2.0f,	0.0f, 0.0f, 1.0f, //	v1 
 		2.0f, 2.0f, 0.0f,	1.0f, 0.0f, 0.0f, //	v7
 		2.0f, 0.0f, 0.0f,	0.0f, 0.0f, 1.0f, //	v5
 		0.0f, 2.0f, 0.0f,	1.0f, 0.0f, 0.0f, //	v6
 		0.0f, 0.0f, 0.0f,	0.0f, 0.0f, 1.0f, //	v4
 		0.0f, 2.0f, 2.0f,	1.0f, 0.0f, 0.0f, //	v2
 		0.0f, 0.0f, 2.0f,	0.0f, 0.0f, 1.0f, //	v0
-		
+
 	};
 
 	glBindVertexArray(myVAO[itriangleStrip1]);
@@ -259,12 +277,12 @@ void myRenderScene() {
 		else {
 			theModelViewMatrix.Mult_glTranslate(1.5, 0.0, 0.0);		// Translate 1.5 down the POSTIVE x-axis.
 		}
-		
+
 		// YOU SHOULD ADD AN EXTRA TRANSLATION HERE IF THE OBELISK IS NOT (ROUGLY)
 		//     CENTERED AT THE ORIGIN.
 		//    FOR THIS, USE Mult_glTranslate, SIMILARLY TO:
 		// theModelViewMatrix.Mult_glTranslate(0.0, yTranslation, 0.0);
-		
+
 		// THE NEXT Mult_glScale COMMAND MAY NEED TO BE CHANGED TO MAKE THE OBELISK EITHER
 		// SMALLER OR LARGER, IN ORDER TO FIT WELL IN THE SCENE.
 		// YOU CAN CHANGE THE CALL TO Mult_glScale TO CHANGE THE SIZE.
@@ -275,7 +293,7 @@ void myRenderScene() {
 
 		// THE NEXT LINES WILL NEED TO BE CHANGED TO DRAW THE OBELISK:
 		// Draw entire tetrahedron as a Triangle Strip
-		
+
 		// Two triangles at the bottom as a strip 
 		glBindVertexArray(myVAO[itwoTriangles]);// load data in 
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -287,12 +305,12 @@ void myRenderScene() {
 		// Triangle Strip to create the trucated square pyramid
 		glBindVertexArray(myVAO[itriangleStrip2]);// load data in 
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 10);
-		
+
 		// Triangle Fan to create the top pyramid. 
 		glBindVertexArray(myVAO[itriangleFan]);// load data in 
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 5);
 	}
-	
+
 	check_for_opengl_errors();   // Really a great idea to check for errors -- esp. good for debugging!
 }
 
@@ -361,13 +379,13 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	case GLFW_KEY_LEFT:
 		viewDirection += deltaAngle;		// Increment
 		if (viewDirection > Pi) {
-			viewDirection -= 2.0*Pi;		// Wrap back to -pi after reaching +pi
+			viewDirection -= 2.0 * Pi;		// Wrap back to -pi after reaching +pi
 		}
 		break;
 	case GLFW_KEY_RIGHT:
 		viewDirection -= deltaAngle;		// Decrement
 		if (viewDirection <= -Pi) {
-			viewDirection += 2.0*Pi;			// Wrap back to +pi after reaching -pi
+			viewDirection += 2.0 * Pi;			// Wrap back to +pi after reaching -pi
 		}
 		break;
 	}
@@ -397,16 +415,16 @@ void window_size_callback(GLFWwindow* window, int width, int height) {
 	if ((Xmax - Xmin) / w < (Ymax - Ymin) / h) {
 		double scale = ((Ymax - Ymin) / h) / ((Xmax - Xmin) / w);
 		double center = (Xmax + Xmin) / 2.0;
-		windowXmin = center - (center - Xmin)*scale;
-		windowXmax = center + (Xmax - center)*scale;
+		windowXmin = center - (center - Xmin) * scale;
+		windowXmax = center + (Xmax - center) * scale;
 		windowYmin = Ymin;
 		windowYmax = Ymax;
 	}
 	else {
 		double scale = ((Xmax - Xmin) / w) / ((Ymax - Ymin) / h);
 		double center = (Ymax + Ymin) / 2;
-		windowYmin = center - (center - Ymin)*scale;
-		windowYmax = center + (Ymax - center)*scale;
+		windowYmin = center - (center - Ymin) * scale;
+		windowYmax = center + (Ymax - center) * scale;
 		windowXmin = Xmin;
 		windowXmax = Xmax;
 	}
@@ -428,7 +446,7 @@ void window_size_callback(GLFWwindow* window, int width, int height) {
 }
 
 void my_setup_OpenGL() {
-	
+
 	glEnable(GL_DEPTH_TEST);	// Enable depth buffering
 	glDepthFunc(GL_LEQUAL);		// Useful for multipass shaders
 
@@ -487,9 +505,9 @@ int main() {
 	printf("Renderer: %s\n", glGetString(GL_RENDERER));
 	printf("OpenGL version supported %s\n", glGetString(GL_VERSION));
 #ifdef GL_SHADING_LANGUAGE_VERSION
-	printf("Supported GLSL version is %s.\n", (char *)glGetString(GL_SHADING_LANGUAGE_VERSION));
+	printf("Supported GLSL version is %s.\n", (char*)glGetString(GL_SHADING_LANGUAGE_VERSION));
 #endif
-    printf("Using GLEW version %s.\n", glewGetString(GLEW_VERSION));
+	printf("Using GLEW version %s.\n", glewGetString(GLEW_VERSION));
 
 	printf("------------------------------\n");
 	printf("Press arrow keys (up, down, left, right) to adjust view direction.\n");
@@ -497,22 +515,22 @@ int main() {
 	printf("Press W (Wireframe) to change between GL_POLYGON_MODE of GL_FILL and GL_LINES.\n");
 	printf("Press C (Cull faces) to toggle whether back faces are culled.\n");
 	printf("Press EXCAPE or 'X' or 'x' to exit.\n");
-	
-    setup_callbacks(window);
-   
-	// Initialize OpenGL, the scene and the shaders
-    my_setup_OpenGL();
-	my_setup_SceneData();
- 	window_size_callback(window, initWidth, initHeight);
 
-    // Loop while program is not terminated.
+	setup_callbacks(window);
+
+	// Initialize OpenGL, the scene and the shaders
+	my_setup_OpenGL();
+	my_setup_SceneData();
+	window_size_callback(window, initWidth, initHeight);
+
+	// Loop while program is not terminated.
 	while (!glfwWindowShouldClose(window)) {
-	
+
 		myRenderScene();				// Render into the current buffer
 		glfwSwapBuffers(window);		// Displays what was just rendered (using double buffering).
 
 		// Poll events (key presses, mouse events)
-		glfwWaitEventsTimeout(1.0/60.0);	    // Use this to animate at 60 frames/sec (timing is NOT reliable)
+		glfwWaitEventsTimeout(1.0 / 60.0);	    // Use this to animate at 60 frames/sec (timing is NOT reliable)
 		// glfwWaitEvents();					// Or, Use this instead if no animation.
 		// glfwPollEvents();					// Use this version when animating as fast as possible
 	}
@@ -563,3 +581,18 @@ bool check_for_opengl_errors() {
 	}
 	return (numErrors != 0);
 }
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+project1math155 / ObeliskProject.cpp at main · goldarluu / project1math155
